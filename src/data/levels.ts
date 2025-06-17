@@ -244,13 +244,22 @@ export const LEVELS: GameLevel[] = [
         type: "moving",
         isBreakable: false,
       },
-      // Final section
+      // Final section with completion goal
       {
         position: { x: 2700, y: 500 },
         velocity: { x: 0, y: 0 },
         size: { width: 600, height: 100 },
         isGrounded: true,
         type: "ground",
+        isBreakable: false,
+      },
+      // Goal flag platform
+      {
+        position: { x: 2750, y: 450 },
+        velocity: { x: 0, y: 0 },
+        size: { width: 50, height: 50 },
+        isGrounded: true,
+        type: "pipe",
         isBreakable: false,
       },
     ],

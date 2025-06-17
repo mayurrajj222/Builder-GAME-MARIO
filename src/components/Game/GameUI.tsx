@@ -76,6 +76,15 @@ export function GameUI({ gameState }: GameUIProps) {
           >
             {formatTime(timeRemaining)}
           </div>
+          {/* Progress indicator */}
+          <div className="mt-1 bg-gray-600 rounded-full h-2 w-16 overflow-hidden">
+            <div
+              className="bg-gradient-to-r from-yellow-400 to-green-400 h-full transition-all duration-300"
+              style={{
+                width: `${Math.min(100, (player.position.x / (level <= 2 ? 2800 : level <= 5 ? 2500 : level <= 10 ? 2700 : 2900)) * 100)}%`,
+              }}
+            />
+          </div>
         </div>
       </div>
 
