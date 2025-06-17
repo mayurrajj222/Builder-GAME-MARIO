@@ -1,0 +1,52 @@
+{
+  "expo": {
+    "name": "Super Dudu & Bubu",
+    "slug": "super-dudu-bubu",
+    "version": "1.0.0",
+    "orientation": "landscape",
+    "icon": "./build/icon.png",
+    "userInterfaceStyle": "dark",
+    "splash": {
+      "image": "./build/icon.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#1e40af"
+    },
+    "assetBundlePatterns": ["**/*"],
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.gamedev.superdudububu",
+      "buildNumber": "1",
+      "orientationLock": "landscape"
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./build/icon.png",
+        "backgroundColor": "#1e40af"
+      },
+      "package": "com.gamedev.superdudububu",
+      "versionCode": 1,
+      "permissions": ["android.permission.VIBRATE"],
+      "orientationLock": "landscape"
+    },
+    "web": {
+      "favicon": "./build/icon.png",
+      "bundler": "metro"
+    },
+    "plugins": [
+      "expo-screen-orientation",
+      [
+        "expo-build-properties",
+        {
+          "android": {
+            "enableProguardInReleaseBuilds": true
+          }
+        }
+      ]
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "super-dudu-bubu-game"
+      }
+    }
+  }
+}
