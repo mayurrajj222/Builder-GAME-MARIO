@@ -385,11 +385,10 @@ export function useGame() {
 
   const updateCamera = useCallback(
     (player: Player, camera: { x: number; y: number }) => {
-      const targetX = player.position.x - GAME_CONFIG.CANVAS_WIDTH / 2;
-      const targetY = Math.max(
-        0,
-        player.position.y - GAME_CONFIG.CANVAS_HEIGHT * 0.7,
-      );
+      // Center player horizontally to show upcoming obstacles
+      // Place player at 1/3 from left edge to show more obstacles ahead
+      const targetX = player.position.x - window.innerWidth * 0.33;
+      const targetY = Math.max(0, player.position.y - window.innerHeight * 0.7);
 
       camera.x += (targetX - camera.x) * GAME_CONFIG.CAMERA_SMOOTH;
       camera.y += (targetY - camera.y) * GAME_CONFIG.CAMERA_SMOOTH;

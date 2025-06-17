@@ -124,8 +124,8 @@ export default function Game() {
       {(gameState.gameStatus === "playing" ||
         gameState.gameStatus === "paused") && (
         <div className="relative h-screen flex landscape:flex-row flex-col">
-          {/* Game Canvas - Optimized for landscape */}
-          <div className="flex-1 flex items-center justify-center landscape:p-4 p-2">
+          {/* Game Canvas - True fullscreen */}
+          <div className="flex-1 w-full h-full">
             <GameCanvas gameState={gameState} />
           </div>
 
