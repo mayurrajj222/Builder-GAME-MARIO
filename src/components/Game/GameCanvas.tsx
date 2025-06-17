@@ -19,8 +19,10 @@ export function GameCanvas({ gameState }: GameCanvasProps) {
     switch (level) {
       case 1:
         return {
-          background:
-            "linear-gradient(180deg, #87CEEB 0%, #B0E0E6 40%, #98FB98 100%)",
+          backgroundImage: `linear-gradient(180deg, rgba(135, 206, 235, 0.8) 0%, rgba(176, 224, 230, 0.6) 40%, rgba(152, 251, 152, 0.4) 100%), url(https://cdn.builder.io/api/v1/assets/eec2c1b00e834cd39ddbda5535f96e32/bg-ce4320?format=webp&width=800)`,
+          backgroundSize: "cover, cover",
+          backgroundRepeat: "no-repeat, repeat-x",
+          backgroundPosition: "center, bottom",
         };
       case 2:
         return {
@@ -29,8 +31,10 @@ export function GameCanvas({ gameState }: GameCanvasProps) {
         };
       default:
         return {
-          background:
-            "linear-gradient(180deg, #87CEEB 0%, #B0E0E6 40%, #98FB98 100%)",
+          backgroundImage: `linear-gradient(180deg, rgba(135, 206, 235, 0.8) 0%, rgba(176, 224, 230, 0.6) 40%, rgba(152, 251, 152, 0.4) 100%), url(https://cdn.builder.io/api/v1/assets/eec2c1b00e834cd39ddbda5535f96e32/bg-ce4320?format=webp&width=800)`,
+          backgroundSize: "cover, cover",
+          backgroundRepeat: "no-repeat, repeat-x",
+          backgroundPosition: "center, bottom",
         };
     }
   };

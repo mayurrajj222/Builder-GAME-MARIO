@@ -22,18 +22,27 @@ export function Platform({ platform, camera }: PlatformProps) {
     switch (platform.type) {
       case "ground":
         return {
-          background:
-            "linear-gradient(180deg, #8B5A2B 0%, #7B4A1B 50%, #6B3A0B 100%)",
+          backgroundImage: `url(https://cdn.builder.io/api/v1/assets/eec2c1b00e834cd39ddbda5535f96e32/ground-7a1485?format=webp&width=800)`,
+          backgroundSize: "cover",
+          backgroundRepeat: "repeat-x",
+          backgroundPosition: "center",
           border: "2px solid #5A2A0A",
+          mixBlendMode: "multiply" as const,
         };
       case "block":
         return {
-          background: platform.isBreakable
-            ? "linear-gradient(45deg, #FFD700 0%, #FFA500 50%, #FF8C00 100%)"
+          backgroundImage: platform.isBreakable
+            ? `url(https://cdn.builder.io/api/v1/assets/eec2c1b00e834cd39ddbda5535f96e32/barrier-56015f?format=webp&width=800)`
             : "linear-gradient(45deg, #CD853F 0%, #D2691E 50%, #A0522D 100%)",
+          backgroundSize: platform.isBreakable ? "cover" : "auto",
+          backgroundRepeat: "no-repeat",
+          backgroundPosition: "center",
           border: platform.isBreakable
             ? "2px solid #FF6347"
             : "2px solid #8B4513",
+          mixBlendMode: platform.isBreakable
+            ? ("multiply" as const)
+            : ("normal" as const),
         };
       case "pipe":
         return {
@@ -57,7 +66,11 @@ export function Platform({ platform, camera }: PlatformProps) {
         "absolute shadow-md",
         platform.type === "block" && platform.size.height <= 25 && "rounded-sm",
         platform.type === "pipe" && "rounded-t-lg",
-        platform.type === "ground" && "border-t-4",
+        platform.type === "ground" &&
+          "border-t-4 ground-sprite remove-white-bg",
+        platform.type === "block" &&
+          platform.isBreakable &&
+          "barrier-sprite remove-white-bg",
         platform.isBreakable &&
           "hover:brightness-110 transition-all duration-100",
       )}

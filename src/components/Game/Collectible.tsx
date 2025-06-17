@@ -21,7 +21,7 @@ export function Collectible({ collectible, camera }: CollectibleProps) {
   const getCollectibleContent = () => {
     switch (collectible.type) {
       case "coin":
-        return "🪙";
+        return null; // Using background image instead
       case "powerup":
         switch (collectible.powerUpType) {
           case "mushroom":
@@ -38,23 +38,30 @@ export function Collectible({ collectible, camera }: CollectibleProps) {
     }
   };
 
-  const getBackgroundColor = () => {
+  const getBackgroundStyle = () => {
     switch (collectible.type) {
       case "coin":
-        return "bg-gradient-to-br from-yellow-400 to-yellow-600";
+        return {
+          backgroundImage: `url(https://cdn.builder.io/api/v1/assets/eec2c1b00e834cd39ddbda5535f96e32/coin-a69003?format=webp&width=800)`,
+          backgroundSize: "contain",
+          backgroundRepeat: "no-repeat",
+          backgroundPosition: "center",
+          backgroundColor: "transparent",
+          mixBlendMode: "multiply" as const,
+        };
       case "powerup":
         switch (collectible.powerUpType) {
           case "mushroom":
-            return "bg-gradient-to-br from-red-400 to-red-600";
+            return { backgroundColor: "#ef4444" };
           case "fireflower":
-            return "bg-gradient-to-br from-orange-400 to-red-500";
+            return { backgroundColor: "#f97316" };
           case "star":
-            return "bg-gradient-to-br from-yellow-300 via-yellow-400 to-yellow-500";
+            return { backgroundColor: "#fbbf24" };
           default:
-            return "bg-gradient-to-br from-blue-400 to-blue-600";
+            return { backgroundColor: "#3b82f6" };
         }
       default:
-        return "bg-gradient-to-br from-purple-400 to-purple-600";
+        return { backgroundColor: "#a855f7" };
     }
   };
 
@@ -62,14 +69,21 @@ export function Collectible({ collectible, camera }: CollectibleProps) {
     <div
       className={cn(
         "absolute transition-all duration-200",
-        "flex items-center justify-center rounded-full",
+        "flex items-center justify-center",
+        collectible.type === "coin"
+          ? "rounded-full coin-sprite remove-white-bg"
+          : "rounded-full",
         "shadow-lg border-2 border-white/30",
         "animate-float",
         collectible.type === "coin" && "animate-spin",
         collectible.powerUpType === "star" && "animate-pulse",
-        getBackgroundColor(),
+        collectible.type !== "coin" &&
+          "bg-gradient-to-br from-current to-current",
       )}
-      style={collectibleStyle}
+      style={{
+        ...collectibleStyle,
+        ...getBackgroundStyle(),
+      }}
     >
       <span className="text-xs drop-shadow-sm">{getCollectibleContent()}</span>
 

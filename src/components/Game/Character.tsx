@@ -24,8 +24,7 @@ export function Character({ player, camera }: CharacterProps) {
     <div
       className={cn(
         "absolute transition-transform duration-75",
-        "flex items-center justify-center rounded-lg font-bold text-white text-xs",
-        "shadow-lg border-2 border-white/20",
+        "shadow-lg player-sprite remove-white-bg",
         player.isJumping && "animate-jump",
         player.isMoving && "animate-walk",
         player.powerUp === "star" && "animate-pulse",
@@ -33,14 +32,29 @@ export function Character({ player, camera }: CharacterProps) {
       )}
       style={{
         ...characterStyle,
-        backgroundColor: config.color,
-        borderColor: config.darkColor,
         transform: `scaleX(${player.direction === "left" ? -1 : 1}) ${
           player.powerUp === "mushroom" ? "scale(1.2)" : ""
         }`,
+        backgroundImage: `url(https://cdn.builder.io/api/v1/assets/eec2c1b00e834cd39ddbda5535f96e32/player-d7e8a5?format=webp&width=800)`,
+        backgroundSize: "contain",
+        backgroundRepeat: "no-repeat",
+        backgroundPosition: "center",
+        mixBlendMode: "multiply",
+        filter:
+          player.character === "dudu"
+            ? "hue-rotate(0deg) saturate(1.2)"
+            : "hue-rotate(200deg) saturate(1.2)",
       }}
     >
-      {player.character === "dudu" ? "🔥" : "💙"}
+      {/* Character indicator overlay */}
+      <div
+        className={cn(
+          "absolute inset-0 flex items-center justify-center text-lg font-bold",
+          "mix-blend-mode-overlay opacity-70",
+        )}
+      >
+        {player.character === "dudu" ? "🔥" : "���"}
+      </div>
 
       {/* Power-up effects */}
       {player.powerUp === "star" && (

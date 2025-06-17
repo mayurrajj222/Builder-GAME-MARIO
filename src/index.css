@@ -301,6 +301,55 @@
       opacity: 0;
     }
   }
+
+  /* Sprite background removal techniques */
+  .sprite-no-bg {
+    /* Method 1: Mix blend mode to remove white backgrounds */
+    mix-blend-mode: multiply;
+  }
+
+  .sprite-transparent-bg {
+    /* Method 2: Filter to remove white/light backgrounds */
+    filter: contrast(1.2) brightness(1.1);
+    background-blend-mode: multiply;
+  }
+
+  .coin-sprite {
+    /* Specific styling for coin sprite */
+    filter: contrast(1.3) brightness(1.2) saturate(1.5);
+    mix-blend-mode: screen;
+  }
+
+  .player-sprite {
+    /* Specific styling for player sprite */
+    filter: contrast(1.1) brightness(1.1) saturate(1.2);
+    background-blend-mode: multiply;
+  }
+
+  .ground-sprite {
+    /* Specific styling for ground texture */
+    filter: contrast(1.1) brightness(0.9);
+    background-blend-mode: overlay;
+  }
+
+  .barrier-sprite {
+    /* Specific styling for barrier/block texture */
+    filter: contrast(1.2) brightness(1) saturate(1.1);
+    background-blend-mode: multiply;
+  }
+
+  /* Remove white backgrounds using CSS filters */
+  .remove-white-bg {
+    filter: contrast(1.5) brightness(1.2) saturate(1.3)
+      drop-shadow(0 0 1px rgba(0, 0, 0, 0.5));
+    mix-blend-mode: multiply;
+  }
+
+  /* Alternative method for transparent backgrounds */
+  .alpha-blend {
+    background-blend-mode: multiply;
+    mix-blend-mode: normal;
+  }
 }
 
 /* Print styles */
