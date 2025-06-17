@@ -15,12 +15,14 @@ interface GameOverScreenProps {
   gameState: GameState;
   onRestart: () => void;
   onBackToMenu: () => void;
+  onNextLevel: () => void;
 }
 
 export function GameOverScreen({
   gameState,
   onRestart,
   onBackToMenu,
+  onNextLevel,
 }: GameOverScreenProps) {
   const { player, score, level } = gameState;
   const config = PLAYER_CONFIG[player.character];
