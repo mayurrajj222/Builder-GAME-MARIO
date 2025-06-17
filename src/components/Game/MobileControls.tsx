@@ -205,7 +205,7 @@ export function MobileControls({
         </div>
 
         {/* Pause Button - Top left to avoid overlap */}
-        <div className="absolute top-4 left-1/2 transform -translate-x-1/2 pointer-events-auto">
+        <div className="absolute top-4 left-1/2 transform -translate-x-1/2 pointer-events-auto sm:top-3 sm:left-8">
           <button
             className={cn(
               "w-12 h-12 rounded-full bg-gray-600/90 border-2 border-gray-500",
@@ -213,6 +213,11 @@ export function MobileControls({
               "shadow-lg active:bg-gray-700 active:scale-95 transition-all duration-100",
               "touch-manipulation select-none",
             )}
+            style={{
+              top: window.innerWidth <= 640 ? "-530px" : undefined,
+              left: window.innerWidth <= 640 ? "32px" : undefined,
+              transform: window.innerWidth <= 640 ? "none" : undefined,
+            }}
             onTouchStart={onPause}
             onMouseDown={onPause}
           >
