@@ -15,11 +15,13 @@ interface GameCanvasProps {
 export function GameCanvas({ gameState }: GameCanvasProps) {
   const { player, enemies, collectibles, platforms, camera, level } = gameState;
 
-  // Mobile-optimized canvas dimensions
-  const canvasHeight = Math.min(
-    window.innerHeight - 120,
-    GAME_CONFIG.CANVAS_HEIGHT,
-  );
+  // Landscape-optimized canvas dimensions
+  const canvasWidth = GAME_CONFIG.LANDSCAPE_MODE
+    ? Math.min(window.innerWidth - 80, GAME_CONFIG.LANDSCAPE_CANVAS_WIDTH)
+    : GAME_CONFIG.CANVAS_WIDTH;
+  const canvasHeight = GAME_CONFIG.LANDSCAPE_MODE
+    ? Math.min(window.innerHeight - 140, GAME_CONFIG.LANDSCAPE_CANVAS_HEIGHT)
+    : Math.min(window.innerHeight - 120, GAME_CONFIG.CANVAS_HEIGHT);
 
   const getBackgroundStyle = () => {
     // Same beautiful background for all levels
@@ -35,15 +37,19 @@ export function GameCanvas({ gameState }: GameCanvasProps) {
   return (
     <div
       className={cn(
-        "relative w-full overflow-hidden shadow-2xl",
+        "relative overflow-hidden shadow-2xl",
         "select-none touch-none", // Prevent text selection and touch scrolling
-        "rounded-lg md:rounded-xl", // Smaller radius on mobile
-        "border-2 md:border-4 border-gray-800",
+        "rounded-lg landscape:rounded-xl", // Optimized for landscape
+        "border-2 landscape:border-4 border-gray-800",
+        "landscape:w-full", // Take full width in landscape
       )}
       style={{
+        width: `${canvasWidth}px`,
         height: `${canvasHeight}px`,
+        maxWidth: "100vw",
         maxHeight: "100vh",
-        minHeight: "400px",
+        minHeight: "300px",
+        minWidth: "400px",
         ...getBackgroundStyle(),
       }}
     >

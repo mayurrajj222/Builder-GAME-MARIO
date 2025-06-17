@@ -1,6 +1,8 @@
 export const GAME_CONFIG = {
   CANVAS_WIDTH: 1024,
   CANVAS_HEIGHT: 600,
+  LANDSCAPE_CANVAS_WIDTH: Math.min(window.innerWidth - 40, 1200), // Landscape optimized width
+  LANDSCAPE_CANVAS_HEIGHT: Math.min(window.innerHeight - 140, 500), // Landscape optimized height
   MOBILE_CANVAS_HEIGHT: 400, // Smaller height for mobile
   GRAVITY: 0.8,
   JUMP_FORCE: -15,
@@ -10,7 +12,8 @@ export const GAME_CONFIG = {
   FRICTION: 0.8,
   TILE_SIZE: 32,
   CAMERA_SMOOTH: 0.1,
-  MOBILE_UI_HEIGHT: 120, // Space for mobile controls
+  MOBILE_UI_HEIGHT: 80, // Reduced height for landscape controls
+  LANDSCAPE_MODE: true, // Enable landscape optimizations
 } as const;
 
 export const PLAYER_CONFIG = {

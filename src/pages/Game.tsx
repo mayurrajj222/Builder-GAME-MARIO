@@ -61,11 +61,11 @@ export default function Game() {
     resetGame();
   };
 
-  // Lock screen orientation to landscape on mobile
+  // Lock screen orientation to landscape on mobile and optimize for horizontal play
   useEffect(() => {
     const lockOrientation = () => {
       if (screen.orientation && screen.orientation.lock) {
-        screen.orientation.lock("landscape").catch(() => {
+        screen.orientation.lock("landscape-primary").catch(() => {
           // Fallback for browsers that don't support orientation lock
         });
       }
@@ -73,24 +73,46 @@ export default function Game() {
 
     lockOrientation();
 
-    // Prevent zoom on mobile
+    // Prevent zoom on mobile and optimize for touch
     const handleTouchStart = (e: TouchEvent) => {
       if (e.touches.length > 1) {
         e.preventDefault();
       }
     };
 
+    // Prevent context menu on long press
+    const handleContextMenu = (e: TouchEvent) => {
+      e.preventDefault();
+    };
+
+    // Add full screen support for better landscape experience
+    const handleFullscreen = () => {
+      if (document.documentElement.requestFullscreen) {
+        document.documentElement.requestFullscreen().catch(() => {
+          // Fullscreen not supported or user denied
+        });
+      }
+    };
+
     document.addEventListener("touchstart", handleTouchStart, {
       passive: false,
     });
+    document.addEventListener("contextmenu", handleContextMenu, {
+      passive: false,
+    });
+
+    // Auto-request fullscreen on first interaction (mobile optimization)
+    document.addEventListener("touchstart", handleFullscreen, { once: true });
 
     return () => {
       document.removeEventListener("touchstart", handleTouchStart);
+      document.removeEventListener("contextmenu", handleContextMenu);
+      document.removeEventListener("touchstart", handleFullscreen);
     };
   }, []);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-900 via-purple-900 to-indigo-900 overflow-hidden">
+    <div className="min-h-screen bg-gradient-to-br from-blue-900 via-purple-900 to-indigo-900 overflow-hidden landscape:h-screen">
       {gameState.gameStatus === "menu" && (
         <CharacterSelect
           selectedCharacter={selectedCharacter}
@@ -101,18 +123,19 @@ export default function Game() {
 
       {(gameState.gameStatus === "playing" ||
         gameState.gameStatus === "paused") && (
-        <div className="relative h-screen flex flex-col">
-          {/* Game Canvas - Takes most of the screen */}
-          <div className="flex-1 flex items-center justify-center p-2">
+        <div className="relative h-screen flex landscape:flex-row flex-col">
+          {/* Game Canvas - Optimized for landscape */}
+          <div className="flex-1 flex items-center justify-center landscape:p-4 p-2">
             <GameCanvas gameState={gameState} />
           </div>
 
-          {/* Mobile Controls */}
+          {/* Mobile Controls - Positioned for landscape */}
           <MobileControls
             onMove={handleMove}
             onJump={handleJump}
             onRun={handleRun}
             onPause={handlePause}
+            controls={controls}
           />
 
           {gameState.gameStatus === "paused" && (
