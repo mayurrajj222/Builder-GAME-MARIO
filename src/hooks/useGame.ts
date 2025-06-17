@@ -155,6 +155,59 @@ export function useGame() {
     [controls],
   );
 
+  const updateMovingPlatforms = useCallback((platforms: Platform[]) => {
+    return platforms.map((platform) => {
+      if (platform.type === "moving") {
+        // Update position based on velocity
+        platform.position.x += platform.velocity.x;
+        platform.position.y += platform.velocity.y;
+
+        // Set default bounds if not specified
+        const bounds = platform.moveBounds || {
+          minX: 0,
+          maxX: GAME_CONFIG.CANVAS_WIDTH * 2,
+          minY: 0,
+          maxY: GAME_CONFIG.CANVAS_HEIGHT,
+        };
+
+        // Reverse direction when hitting bounds
+        if (
+          platform.position.x <= (bounds.minX || 0) ||
+          platform.position.x + platform.size.width >=
+            (bounds.maxX || GAME_CONFIG.CANVAS_WIDTH * 2)
+        ) {
+          platform.velocity.x *= -1;
+        }
+
+        if (
+          platform.position.y <= (bounds.minY || 0) ||
+          platform.position.y + platform.size.height >=
+            (bounds.maxY || GAME_CONFIG.CANVAS_HEIGHT)
+        ) {
+          platform.velocity.y *= -1;
+        }
+
+        // Clamp position to bounds
+        platform.position.x = Math.max(
+          bounds.minX || 0,
+          Math.min(
+            platform.position.x,
+            (bounds.maxX || GAME_CONFIG.CANVAS_WIDTH * 2) - platform.size.width,
+          ),
+        );
+        platform.position.y = Math.max(
+          bounds.minY || 0,
+          Math.min(
+            platform.position.y,
+            (bounds.maxY || GAME_CONFIG.CANVAS_HEIGHT) - platform.size.height,
+          ),
+        );
+      }
+
+      return platform;
+    });
+  }, []);
+
   const updateEnemies = useCallback(
     (enemies: Enemy[], platforms: Platform[]) => {
       return enemies.map((enemy) => {
@@ -279,11 +332,14 @@ export function useGame() {
 
       const newState = { ...prev };
 
+      // Update moving platforms
+      newState.platforms = updateMovingPlatforms([...prev.platforms]);
+
       // Update player
-      newState.player = updatePlayer({ ...prev.player }, prev.platforms);
+      newState.player = updatePlayer({ ...prev.player }, newState.platforms);
 
       // Update enemies
-      newState.enemies = updateEnemies([...prev.enemies], prev.platforms);
+      newState.enemies = updateEnemies([...prev.enemies], newState.platforms);
 
       // Check collectibles
       const collectibleResult = checkCollectibles(
@@ -326,10 +382,21 @@ export function useGame() {
       newState.camera = updateCamera(newState.player, { ...prev.camera });
 
       // Check level completion (reached far right of level)
-      if (newState.player.position.x > 2400) {
+      const levelEndX =
+        newState.level <= 5
+          ? 1200
+          : newState.level <= 10
+            ? 1400
+            : newState.level <= 15
+              ? 1600
+              : 2000;
+
+      if (newState.player.position.x > levelEndX) {
         newState.gameStatus = "levelComplete";
         newState.score += SCORES.LEVEL_COMPLETE;
-        newState.score += newState.timeRemaining * SCORES.TIME_BONUS;
+        newState.score += Math.floor(
+          newState.timeRemaining * SCORES.TIME_BONUS,
+        );
       }
 
       // Update timer
@@ -338,8 +405,26 @@ export function useGame() {
         newState.gameStatus = "gameOver";
       }
 
-      // Check if player fell off screen
-      if (newState.player.position.y > GAME_CONFIG.CANVAS_HEIGHT + 100) {
+      // Check if player fell off screen (death fall)
+      if (newState.player.position.y > GAME_CONFIG.CANVAS_HEIGHT + 50) {
+        newState.lives -= 1;
+        if (newState.lives <= 0) {
+          newState.gameStatus = "gameOver";
+        } else {
+          // Reset player to start position
+          const level = LEVELS[newState.level - 1];
+          newState.player.position = { ...level.playerStart };
+          newState.player.velocity = { x: 0, y: 0 };
+          newState.player.health =
+            PLAYER_CONFIG[newState.player.character].maxHealth;
+          newState.player.powerUp = null;
+          // Reset camera
+          newState.camera = { x: 0, y: 0 };
+        }
+      }
+
+      // Check if player fell off the left edge of platforms (also death)
+      if (newState.player.position.x < -100) {
         newState.lives -= 1;
         if (newState.lives <= 0) {
           newState.gameStatus = "gameOver";
@@ -349,6 +434,8 @@ export function useGame() {
           newState.player.velocity = { x: 0, y: 0 };
           newState.player.health =
             PLAYER_CONFIG[newState.player.character].maxHealth;
+          newState.player.powerUp = null;
+          newState.camera = { x: 0, y: 0 };
         }
       }
 
@@ -458,6 +545,8 @@ export function useGame() {
           velocity: { x: 0, y: 0 },
           health: playerConfig.maxHealth,
           powerUp: null,
+          isJumping: false,
+          isMoving: false,
         },
         enemies: level.enemies.map((enemy, index) => ({
           ...enemy,
@@ -470,12 +559,32 @@ export function useGame() {
         platforms: level.platforms.map((platform, index) => ({
           ...platform,
           id: `platform-${index}`,
+          // Set moving bounds for moving platforms
+          moveBounds:
+            platform.type === "moving"
+              ? {
+                  minX: Math.max(0, platform.position.x - 200),
+                  maxX: Math.min(
+                    GAME_CONFIG.CANVAS_WIDTH * 2,
+                    platform.position.x + 200,
+                  ),
+                  minY: Math.max(50, platform.position.y - 100),
+                  maxY: Math.min(
+                    GAME_CONFIG.CANVAS_HEIGHT - 50,
+                    platform.position.y + 100,
+                  ),
+                }
+              : undefined,
         })),
         camera: { x: 0, y: 0 },
       }));
     } else {
-      // Game completed
-      setGameState((prev) => ({ ...prev, gameStatus: "gameOver" }));
+      // All levels completed!
+      setGameState((prev) => ({
+        ...prev,
+        gameStatus: "gameOver",
+        score: prev.score + 5000, // Bonus for completing all levels
+      }));
     }
   }, [gameState.level, gameState.player.character]);
 

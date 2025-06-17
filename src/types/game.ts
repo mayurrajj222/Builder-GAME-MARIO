@@ -44,9 +44,15 @@ export interface Collectible extends GameEntity {
 }
 
 export interface Platform extends GameEntity {
-  type: "ground" | "block" | "pipe";
+  type: "ground" | "block" | "pipe" | "moving";
   isBreakable: boolean;
   hasItem?: Collectible;
+  moveBounds?: {
+    minX?: number;
+    maxX?: number;
+    minY?: number;
+    maxY?: number;
+  };
 }
 
 export type PowerUpType = "mushroom" | "fireflower" | "star";

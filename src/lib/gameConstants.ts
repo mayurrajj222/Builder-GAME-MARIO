@@ -89,6 +89,16 @@ export const LEVEL_THEMES = {
     groundColor: "#708090",
     blockColor: "#A9A9A9",
   },
+  space: {
+    backgroundColor: "#000011",
+    groundColor: "#4A4A6A",
+    blockColor: "#6A6AFF",
+  },
+  lava: {
+    backgroundColor: "#330000",
+    groundColor: "#AA3300",
+    blockColor: "#FF6600",
+  },
 } as const;
 
 export const KEYBOARD_CONTROLS = {
