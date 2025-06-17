@@ -15,6 +15,12 @@ interface GameCanvasProps {
 export function GameCanvas({ gameState }: GameCanvasProps) {
   const { player, enemies, collectibles, platforms, camera, level } = gameState;
 
+  // Mobile-optimized canvas dimensions
+  const canvasHeight = Math.min(
+    window.innerHeight - 120,
+    GAME_CONFIG.CANVAS_HEIGHT,
+  );
+
   const getBackgroundStyle = () => {
     // Same beautiful background for all levels
     return {
