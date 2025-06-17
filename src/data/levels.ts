@@ -139,13 +139,22 @@ export const LEVELS: GameLevel[] = [
       },
       // Power-up near the end
       {
-        position: { x: 2700, y: 450 },
+        position: { x: 2000, y: 450 },
         velocity: { x: 0, y: 0 },
         size: { width: 25, height: 25 },
         isGrounded: false,
         type: "powerup",
         value: 500,
         powerUpType: "mushroom",
+      },
+      // Level completion goal marker
+      {
+        position: { x: 2750, y: 450 },
+        velocity: { x: 0, y: 0 },
+        size: { width: 30, height: 30 },
+        isGrounded: false,
+        type: "coin",
+        value: 500,
       },
     ],
   },
