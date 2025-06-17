@@ -50,10 +50,10 @@ export function Character({ player, camera }: CharacterProps) {
       <div
         className={cn(
           "absolute inset-0 flex items-center justify-center text-lg font-bold",
-          "mix-blend-mode-overlay opacity-70",
+          "mix-blend-mode-overlay opacity-[0.11]",
         )}
       >
-        {player.character === "dudu" ? "🔥" : "���"}
+        {player.character === "dudu" ? "🔥" : "💙"}
       </div>
 
       {/* Power-up effects */}
