@@ -98,6 +98,20 @@ export function GameUI({ gameState }: GameUIProps) {
         </div>
       )}
 
+      {/* Level completion hint */}
+      {(() => {
+        const levelEndX =
+          level <= 2 ? 2800 : level <= 5 ? 2500 : level <= 10 ? 2700 : 2900;
+        const distanceToEnd = levelEndX - player.position.x;
+        const showHint = distanceToEnd < 400 && distanceToEnd > 0;
+
+        return showHint ? (
+          <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-yellow-500/90 text-black px-4 py-2 rounded-lg font-bold text-lg animate-pulse">
+            🏁 Goal Ahead! Keep going! 🏁
+          </div>
+        ) : null;
+      })()}
+
       {/* Controls hint - Only show on desktop/large screens */}
       <div className="absolute bottom-4 left-4 text-white/60 text-xs hidden lg:block">
         <div>Use ← → or A D to move</div>
