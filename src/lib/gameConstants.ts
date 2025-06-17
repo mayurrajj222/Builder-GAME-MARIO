@@ -19,18 +19,18 @@ export const PLAYER_CONFIG = {
     darkColor: "#e55a94",
     name: "Bubu",
     maxHealth: 3,
-    jumpForce: -16,
-    speed: 4.5,
-    runSpeed: 7.5,
+    jumpForce: -17, // Slightly higher jump
+    speed: 4.8, // Slightly faster for better platform jumping
+    runSpeed: 7.8,
   },
   dudu: {
     color: "#deb887",
     darkColor: "#cd853f",
     name: "Dudu",
     maxHealth: 3,
-    jumpForce: -15,
-    speed: 5,
-    runSpeed: 8,
+    jumpForce: -16, // Higher jump
+    speed: 5.2, // Faster for better platform jumping
+    runSpeed: 8.2,
   },
 } as const;
 

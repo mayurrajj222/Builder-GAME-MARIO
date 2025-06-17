@@ -42,7 +42,9 @@ export function applyGravity(entity: GameEntity): void {
 }
 
 export function applyFriction(entity: GameEntity): void {
-  entity.velocity.x *= GAME_CONFIG.FRICTION;
+  // Apply stronger friction when grounded for better control
+  const frictionValue = entity.isGrounded ? 0.85 : GAME_CONFIG.FRICTION;
+  entity.velocity.x *= frictionValue;
 }
 
 export function updatePosition(entity: GameEntity): void {

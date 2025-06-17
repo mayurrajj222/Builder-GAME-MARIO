@@ -120,11 +120,18 @@ export function useGame() {
         player.isMoving = false;
       }
 
-      // Handle jumping
-      if (controls.jump && player.isGrounded) {
-        player.velocity.y = playerConfig.jumpForce;
-        player.isJumping = true;
-        player.isGrounded = false;
+      // Handle jumping with coyote time (more forgiving)
+      if (controls.jump) {
+        // Allow jumping for a short time after leaving ground (coyote time)
+        const canJump =
+          player.isGrounded ||
+          (!player.isGrounded && Math.abs(player.velocity.y) < 2); // Small velocity tolerance
+
+        if (canJump) {
+          player.velocity.y = playerConfig.jumpForce;
+          player.isJumping = true;
+          player.isGrounded = false;
+        }
       }
 
       // Apply physics
@@ -137,10 +144,31 @@ export function useGame() {
       // Check if player is on a moving platform and move with it
       if (player.isGrounded) {
         platforms.forEach((platform) => {
-          if (platform.type === "moving" && checkCollision(player, platform)) {
-            // Player moves with the platform
-            player.position.x += platform.velocity.x;
-            player.position.y += platform.velocity.y;
+          if (platform.type === "moving") {
+            // Check if player is standing on this platform (more precise collision)
+            const playerBottom = player.position.y + player.size.height;
+            const playerLeft = player.position.x;
+            const playerRight = player.position.x + player.size.width;
+            const platformTop = platform.position.y;
+            const platformLeft = platform.position.x;
+            const platformRight = platform.position.x + platform.size.width;
+
+            // Check if player is on top of the platform
+            if (
+              playerBottom >= platformTop &&
+              playerBottom <= platformTop + 10 && // Small tolerance
+              playerRight > platformLeft &&
+              playerLeft < platformRight
+            ) {
+              // Player moves with the platform - reduced slipping
+              player.position.x += platform.velocity.x * 0.95; // Slightly less than full speed to reduce slip
+              player.position.y += platform.velocity.y * 0.95;
+
+              // Add friction to make platform feel less slippery
+              if (Math.abs(platform.velocity.x) > 0) {
+                player.velocity.x *= 0.9; // Apply friction when on moving platform
+              }
+            }
           }
         });
       }
@@ -169,9 +197,9 @@ export function useGame() {
   const updateMovingPlatforms = useCallback((platforms: Platform[]) => {
     return platforms.map((platform) => {
       if (platform.type === "moving") {
-        // Update position based on velocity
-        platform.position.x += platform.velocity.x;
-        platform.position.y += platform.velocity.y;
+        // Update position based on velocity (reduced speed for better control)
+        platform.position.x += platform.velocity.x * 0.8; // 20% slower for better control
+        platform.position.y += platform.velocity.y * 0.8;
 
         // Set default bounds if not specified
         const bounds = platform.moveBounds || {
