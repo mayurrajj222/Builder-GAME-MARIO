@@ -24,20 +24,20 @@ export function CharacterSelect({
   const characters: Array<"bubu" | "dudu"> = ["bubu", "dudu"];
 
   return (
-    <div className="min-h-screen bg-game-gradient flex items-center justify-center p-4">
-      <div className="max-w-4xl w-full">
+    <div className="min-h-screen bg-game-gradient flex items-center justify-center p-2 sm:p-4">
+      <div className="max-w-4xl w-full overflow-y-auto max-h-screen">
         {/* Title */}
-        <div className="text-center mb-8">
-          <h1 className="text-6xl font-game font-bold text-white drop-shadow-lg mb-2">
+        <div className="text-center mb-4 sm:mb-8">
+          <h1 className="text-3xl sm:text-4xl md:text-6xl font-game font-bold text-white drop-shadow-lg mb-2">
             Super Dudu & Bubu
           </h1>
-          <p className="text-xl text-white/80 drop-shadow">
+          <p className="text-sm sm:text-lg md:text-xl text-white/80 drop-shadow px-2">
             Choose your hero and embark on an epic adventure!
           </p>
         </div>
 
         {/* Character Selection */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 md:gap-8 mb-4 sm:mb-8">
           {characters.map((character) => {
             const config = PLAYER_CONFIG[character];
             const isSelected = selectedCharacter === character;
@@ -171,17 +171,17 @@ export function CharacterSelect({
             size="lg"
             onClick={onStartGame}
             className={cn(
-              "text-xl px-12 py-6 font-game font-bold shadow-2xl border-4",
+              "text-lg sm:text-xl px-8 sm:px-12 py-4 sm:py-6 font-game font-bold shadow-2xl border-4",
               "bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700",
-              "border-green-400 text-white transition-all duration-300 transform hover:scale-110",
-              "animate-pulse",
+              "border-green-400 text-white transition-all duration-300 transform active:scale-95",
+              "animate-pulse touch-manipulation w-full sm:w-auto",
             )}
           >
             🚀 START ADVENTURE 🚀
           </Button>
 
-          <p className="mt-4 text-white/60 text-sm">
-            Press any key to start once you're in the game!
+          <p className="mt-2 sm:mt-4 text-white/60 text-xs sm:text-sm px-2">
+            Use the on-screen controls to play!
           </p>
         </div>
 

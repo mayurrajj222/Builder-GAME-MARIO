@@ -1,6 +1,7 @@
 export const GAME_CONFIG = {
   CANVAS_WIDTH: 1024,
   CANVAS_HEIGHT: 600,
+  MOBILE_CANVAS_HEIGHT: 400, // Smaller height for mobile
   GRAVITY: 0.8,
   JUMP_FORCE: -15,
   PLAYER_SPEED: 5,
@@ -9,6 +10,7 @@ export const GAME_CONFIG = {
   FRICTION: 0.8,
   TILE_SIZE: 32,
   CAMERA_SMOOTH: 0.1,
+  MOBILE_UI_HEIGHT: 120, // Space for mobile controls
 } as const;
 
 export const PLAYER_CONFIG = {

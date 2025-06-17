@@ -16,37 +16,28 @@ export function GameCanvas({ gameState }: GameCanvasProps) {
   const { player, enemies, collectibles, platforms, camera, level } = gameState;
 
   const getBackgroundStyle = () => {
-    switch (level) {
-      case 1:
-        return {
-          backgroundImage: `linear-gradient(180deg, rgba(135, 206, 235, 0.8) 0%, rgba(176, 224, 230, 0.6) 40%, rgba(152, 251, 152, 0.4) 100%), url(https://cdn.builder.io/api/v1/assets/eec2c1b00e834cd39ddbda5535f96e32/bg-ce4320?format=webp&width=800)`,
-          backgroundSize: "cover, cover",
-          backgroundRepeat: "no-repeat, repeat-x",
-          backgroundPosition: "center, bottom",
-        };
-      case 2:
-        return {
-          background:
-            "linear-gradient(180deg, #2F4F4F 0%, #4A4A4A 50%, #1C1C1C 100%)",
-        };
-      default:
-        return {
-          backgroundImage: `linear-gradient(180deg, rgba(135, 206, 235, 0.8) 0%, rgba(176, 224, 230, 0.6) 40%, rgba(152, 251, 152, 0.4) 100%), url(https://cdn.builder.io/api/v1/assets/eec2c1b00e834cd39ddbda5535f96e32/bg-ce4320?format=webp&width=800)`,
-          backgroundSize: "cover, cover",
-          backgroundRepeat: "no-repeat, repeat-x",
-          backgroundPosition: "center, bottom",
-        };
-    }
+    // Same beautiful background for all levels
+    return {
+      backgroundImage: `linear-gradient(180deg, rgba(135, 206, 235, 0.8) 0%, rgba(176, 224, 230, 0.6) 40%, rgba(152, 251, 152, 0.4) 100%), url(https://cdn.builder.io/api/v1/assets/eec2c1b00e834cd39ddbda5535f96e32/bg-ce4320?format=webp&width=800)`,
+      backgroundSize: "cover, cover",
+      backgroundRepeat: "no-repeat, repeat-x",
+      backgroundPosition: "center, bottom",
+      backgroundAttachment: "fixed", // Keep background stable during scrolling
+    };
   };
 
   return (
     <div
       className={cn(
-        "relative w-full overflow-hidden rounded-lg shadow-2xl border-4 border-gray-800",
-        "select-none",
+        "relative w-full overflow-hidden shadow-2xl",
+        "select-none touch-none", // Prevent text selection and touch scrolling
+        "rounded-lg md:rounded-xl", // Smaller radius on mobile
+        "border-2 md:border-4 border-gray-800",
       )}
       style={{
-        height: `${GAME_CONFIG.CANVAS_HEIGHT}px`,
+        height: `${canvasHeight}px`,
+        maxHeight: "100vh",
+        minHeight: "400px",
         ...getBackgroundStyle(),
       }}
     >

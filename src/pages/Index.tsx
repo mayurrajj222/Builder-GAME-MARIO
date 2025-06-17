@@ -12,14 +12,14 @@ import { cn } from "@/lib/utils";
 
 const Index = () => {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-900 via-purple-900 to-indigo-900 flex items-center justify-center p-4">
-      <div className="max-w-4xl w-full text-center space-y-8">
+    <div className="min-h-screen bg-gradient-to-br from-blue-900 via-purple-900 to-indigo-900 flex items-center justify-center p-2 sm:p-4">
+      <div className="max-w-4xl w-full text-center space-y-4 sm:space-y-8 overflow-y-auto max-h-screen">
         {/* Main Title */}
-        <div className="space-y-4">
-          <h1 className="text-8xl font-game font-bold text-white drop-shadow-2xl animate-bounce">
+        <div className="space-y-2 sm:space-y-4">
+          <h1 className="text-4xl sm:text-6xl md:text-8xl font-game font-bold text-white drop-shadow-2xl animate-bounce">
             Super Dudu & Bubu
           </h1>
-          <p className="text-2xl text-white/80 drop-shadow-lg font-game">
+          <p className="text-lg sm:text-xl md:text-2xl text-white/80 drop-shadow-lg font-game px-2">
             🐼 Epic Platform Adventure Game 🐻
           </p>
           <div className="flex items-center justify-center gap-4 text-4xl animate-float">
@@ -34,7 +34,7 @@ const Index = () => {
         </div>
 
         {/* Game Features */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 sm:gap-6 mb-4 sm:mb-8">
           <Card className="bg-white/10 backdrop-blur-md border-4 border-white/20 shadow-2xl">
             <CardHeader>
               <div className="text-4xl mb-2">🎮</div>
@@ -108,10 +108,10 @@ const Index = () => {
             <Button
               size="lg"
               className={cn(
-                "text-3xl px-16 py-8 font-game font-bold shadow-2xl border-4",
+                "text-xl sm:text-2xl md:text-3xl px-8 sm:px-12 md:px-16 py-4 sm:py-6 md:py-8 font-game font-bold shadow-2xl border-4",
                 "bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700",
-                "border-green-400 text-white transition-all duration-300 transform hover:scale-110",
-                "animate-pulse",
+                "border-green-400 text-white transition-all duration-300 transform active:scale-95",
+                "animate-pulse touch-manipulation w-full sm:w-auto",
               )}
             >
               🚀 PLAY NOW 🚀
