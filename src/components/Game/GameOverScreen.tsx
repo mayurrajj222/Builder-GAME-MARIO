@@ -174,10 +174,10 @@ export function GameOverScreen({
               🔄 PLAY AGAIN
             </Button>
 
-            {isVictory && level < 2 && (
+            {isVictory && level < 15 && (
               <Button
                 size="lg"
-                onClick={onRestart}
+                onClick={onNextLevel}
                 className={cn(
                   "flex-1 text-lg py-6 font-game font-bold shadow-xl border-4",
                   "bg-gradient-to-r from-purple-500 to-purple-600 hover:from-purple-600 hover:to-purple-700",
