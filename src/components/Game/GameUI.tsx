@@ -18,59 +18,55 @@ export function GameUI({ gameState }: GameUIProps) {
   };
 
   return (
-    <div className="absolute top-0 left-0 right-0 z-50 bg-gradient-to-b from-black/80 via-black/60 to-transparent p-4">
-      <div className="flex justify-between items-center text-white font-game">
-        {/* Left side - Character and lives */}
-        <div className="flex items-center gap-4">
-          <div className="flex items-center gap-2">
-            <div
-              className="w-8 h-8 rounded-lg flex items-center justify-center text-sm font-bold shadow-lg border-2 border-white/20"
-              style={{
-                backgroundColor: playerConfig.color,
-                borderColor: playerConfig.darkColor,
-              }}
-            >
-              {player.character === "dudu" ? "🔥" : "💙"}
+    <div className="absolute top-0 left-0 right-0 z-50 bg-gradient-to-b from-black/80 via-black/60 to-transparent p-2">
+      <div className="flex justify-between items-center text-white font-game text-xs">
+        {/* Left side - Character and status */}
+        <div className="flex items-center gap-2">
+          <div
+            className="w-6 h-6 rounded-lg flex items-center justify-center text-xs font-bold shadow-lg border border-white/20"
+            style={{
+              backgroundColor: playerConfig.color,
+              borderColor: playerConfig.darkColor,
+            }}
+          >
+            {player.character === "bubu" ? "🐼" : "🐻"}
+          </div>
+
+          <div className="flex flex-col">
+            <div className="flex items-center gap-1">
+              <span>❤️</span>
+              {Array.from({ length: player.health }).map((_, i) => (
+                <div key={i} className="w-2 h-2 bg-red-500 rounded-full" />
+              ))}
             </div>
-            <span className="text-lg font-bold">{playerConfig.name}</span>
-          </div>
-
-          <div className="flex items-center gap-1">
-            <span className="text-sm">Lives:</span>
-            {Array.from({ length: lives }).map((_, i) => (
-              <div key={i} className="w-4 h-4 bg-red-500 rounded-full" />
-            ))}
-          </div>
-
-          {/* Health */}
-          <div className="flex items-center gap-1">
-            <span className="text-sm">Health:</span>
-            {Array.from({ length: player.health }).map((_, i) => (
-              <div key={i} className="w-3 h-3 bg-green-500 rounded-full" />
-            ))}
+            <div className="flex items-center gap-1">
+              <span>👤</span>
+              {Array.from({ length: lives }).map((_, i) => (
+                <div key={i} className="w-2 h-2 bg-blue-500 rounded-full" />
+              ))}
+            </div>
           </div>
         </div>
 
         {/* Center - Score */}
         <div className="text-center">
-          <div className="text-2xl font-bold text-yellow-400 drop-shadow-lg">
+          <div className="text-lg font-bold text-yellow-400 drop-shadow-lg">
             {score.toLocaleString()}
           </div>
-          <div className="text-xs text-yellow-200">SCORE</div>
         </div>
 
         {/* Right side - Level and time */}
         <div className="text-right">
-          <div className="text-lg font-bold">Level {level}</div>
+          <div className="text-sm font-bold">L{level}</div>
           <div
             className={cn(
-              "text-sm",
+              "text-xs",
               timeRemaining < 30
                 ? "text-red-400 animate-pulse"
                 : "text-blue-200",
             )}
           >
-            Time: {formatTime(timeRemaining)}
+            {formatTime(timeRemaining)}
           </div>
         </div>
       </div>
