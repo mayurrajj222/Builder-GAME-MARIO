@@ -4,62 +4,93 @@ import { GAME_CONFIG } from "@/lib/gameConstants";
 const { TILE_SIZE } = GAME_CONFIG;
 
 export const LEVELS: GameLevel[] = [
-  // Level 1: Green Hills - Tutorial
+  // Level 1: Green Hills - Tutorial (Longer and Easier)
   {
     id: 1,
     name: "Green Hills Tutorial",
     playerStart: { x: 100, y: 400 },
-    timeLimit: 300,
+    timeLimit: 400,
     background: "grassland",
     platforms: [
+      // Extended ground sections for easier navigation
       {
         position: { x: 0, y: 500 },
         velocity: { x: 0, y: 0 },
-        size: { width: 400, height: 100 },
+        size: { width: 600, height: 100 },
         isGrounded: true,
         type: "ground",
         isBreakable: false,
       },
+      // Easier, wider platforms
       {
-        position: { x: 500, y: 450 },
+        position: { x: 700, y: 450 },
         velocity: { x: 0, y: 0 },
-        size: { width: 100, height: 30 },
+        size: { width: 150, height: 30 },
         isGrounded: true,
         type: "block",
         isBreakable: false,
       },
       {
-        position: { x: 700, y: 400 },
+        position: { x: 950, y: 400 },
         velocity: { x: 0, y: 0 },
-        size: { width: 100, height: 30 },
+        size: { width: 150, height: 30 },
+        isGrounded: true,
+        type: "block",
+        isBreakable: false,
+      },
+      // More ground for safe landing
+      {
+        position: { x: 1200, y: 500 },
+        velocity: { x: 0, y: 0 },
+        size: { width: 600, height: 100 },
+        isGrounded: true,
+        type: "ground",
+        isBreakable: false,
+      },
+      // Additional platforms for longer level
+      {
+        position: { x: 1900, y: 450 },
+        velocity: { x: 0, y: 0 },
+        size: { width: 200, height: 30 },
         isGrounded: true,
         type: "block",
         isBreakable: false,
       },
       {
-        position: { x: 900, y: 500 },
+        position: { x: 2200, y: 400 },
         velocity: { x: 0, y: 0 },
-        size: { width: 400, height: 100 },
+        size: { width: 200, height: 30 },
+        isGrounded: true,
+        type: "block",
+        isBreakable: false,
+      },
+      // Final ground section
+      {
+        position: { x: 2500, y: 500 },
+        velocity: { x: 0, y: 0 },
+        size: { width: 800, height: 100 },
         isGrounded: true,
         type: "ground",
         isBreakable: false,
       },
     ],
     enemies: [
+      // Only one easy enemy
       {
-        position: { x: 600, y: 460 },
+        position: { x: 1300, y: 460 },
         velocity: { x: -1, y: 0 },
         size: { width: 30, height: 30 },
         isGrounded: true,
         type: "goomba",
         health: 1,
         direction: "left",
-        speed: 1,
+        speed: 0.5, // Slower enemy
       },
     ],
     collectibles: [
+      // More coins spread out
       {
-        position: { x: 550, y: 400 },
+        position: { x: 400, y: 450 },
         velocity: { x: 0, y: 0 },
         size: { width: 20, height: 20 },
         isGrounded: false,
@@ -67,7 +98,7 @@ export const LEVELS: GameLevel[] = [
         value: 100,
       },
       {
-        position: { x: 750, y: 350 },
+        position: { x: 750, y: 400 },
         velocity: { x: 0, y: 0 },
         size: { width: 20, height: 20 },
         isGrounded: false,
@@ -75,7 +106,40 @@ export const LEVELS: GameLevel[] = [
         value: 100,
       },
       {
-        position: { x: 1100, y: 450 },
+        position: { x: 1000, y: 350 },
+        velocity: { x: 0, y: 0 },
+        size: { width: 20, height: 20 },
+        isGrounded: false,
+        type: "coin",
+        value: 100,
+      },
+      {
+        position: { x: 1500, y: 450 },
+        velocity: { x: 0, y: 0 },
+        size: { width: 20, height: 20 },
+        isGrounded: false,
+        type: "coin",
+        value: 100,
+      },
+      {
+        position: { x: 1950, y: 400 },
+        velocity: { x: 0, y: 0 },
+        size: { width: 20, height: 20 },
+        isGrounded: false,
+        type: "coin",
+        value: 100,
+      },
+      {
+        position: { x: 2250, y: 350 },
+        velocity: { x: 0, y: 0 },
+        size: { width: 20, height: 20 },
+        isGrounded: false,
+        type: "coin",
+        value: 100,
+      },
+      // Power-up near the end
+      {
+        position: { x: 2700, y: 450 },
         velocity: { x: 0, y: 0 },
         size: { width: 25, height: 25 },
         isGrounded: false,
@@ -86,70 +150,108 @@ export const LEVELS: GameLevel[] = [
     ],
   },
 
-  // Level 2: Moving Platforms
+  // Level 2: Floating Gardens (Longer and Easier)
   {
     id: 2,
     name: "Floating Gardens",
     playerStart: { x: 100, y: 400 },
-    timeLimit: 400,
+    timeLimit: 500,
     background: "grassland",
     platforms: [
       {
         position: { x: 0, y: 500 },
-        velocity: { x: 0, y: 0 },
-        size: { width: 300, height: 100 },
-        isGrounded: true,
-        type: "ground",
-        isBreakable: false,
-      },
-      {
-        position: { x: 400, y: 400 },
-        velocity: { x: 2, y: 0 },
-        size: { width: 120, height: 20 },
-        isGrounded: true,
-        type: "moving",
-        isBreakable: false,
-      },
-      {
-        position: { x: 600, y: 350 },
-        velocity: { x: -1.5, y: 0 },
-        size: { width: 120, height: 20 },
-        isGrounded: true,
-        type: "moving",
-        isBreakable: false,
-      },
-      {
-        position: { x: 800, y: 300 },
-        velocity: { x: 0, y: 1 },
-        size: { width: 120, height: 20 },
-        isGrounded: true,
-        type: "moving",
-        isBreakable: false,
-      },
-      {
-        position: { x: 1000, y: 450 },
         velocity: { x: 0, y: 0 },
         size: { width: 400, height: 100 },
         isGrounded: true,
         type: "ground",
         isBreakable: false,
       },
+      // Slower moving platforms for easier gameplay
+      {
+        position: { x: 500, y: 400 },
+        velocity: { x: 1, y: 0 },
+        size: { width: 150, height: 25 },
+        isGrounded: true,
+        type: "moving",
+        isBreakable: false,
+      },
+      {
+        position: { x: 750, y: 350 },
+        velocity: { x: -0.8, y: 0 },
+        size: { width: 150, height: 25 },
+        isGrounded: true,
+        type: "moving",
+        isBreakable: false,
+      },
+      // Static platform for rest
+      {
+        position: { x: 1000, y: 300 },
+        velocity: { x: 0, y: 0 },
+        size: { width: 200, height: 30 },
+        isGrounded: true,
+        type: "block",
+        isBreakable: false,
+      },
+      {
+        position: { x: 1300, y: 400 },
+        velocity: { x: 0, y: 0.5 },
+        size: { width: 150, height: 25 },
+        isGrounded: true,
+        type: "moving",
+        isBreakable: false,
+      },
+      {
+        position: { x: 1550, y: 350 },
+        velocity: { x: 1.2, y: 0 },
+        size: { width: 150, height: 25 },
+        isGrounded: true,
+        type: "moving",
+        isBreakable: false,
+      },
+      // More ground sections
+      {
+        position: { x: 1800, y: 500 },
+        velocity: { x: 0, y: 0 },
+        size: { width: 500, height: 100 },
+        isGrounded: true,
+        type: "ground",
+        isBreakable: false,
+      },
+      // Additional moving platforms
+      {
+        position: { x: 2400, y: 400 },
+        velocity: { x: -1, y: 0 },
+        size: { width: 150, height: 25 },
+        isGrounded: true,
+        type: "moving",
+        isBreakable: false,
+      },
+      // Final section
+      {
+        position: { x: 2700, y: 500 },
+        velocity: { x: 0, y: 0 },
+        size: { width: 600, height: 100 },
+        isGrounded: true,
+        type: "ground",
+        isBreakable: false,
+      },
     ],
     enemies: [
+      // Fewer and slower enemies
       {
-        position: { x: 1100, y: 410 },
+        position: { x: 1900, y: 460 },
         velocity: { x: -1, y: 0 },
         size: { width: 30, height: 30 },
         isGrounded: true,
         type: "goomba",
         health: 1,
         direction: "left",
-        speed: 1,
+        speed: 0.7,
       },
     ],
     collectibles: [
       {
-        position: { x: 450, y: 350 },
+        position: { x: 550, y: 350 },
         velocity: { x: 0, y: 0 },
         size: { width: 20, height: 20 },
         isGrounded: false,
@@ -157,7 +259,47 @@ export const LEVELS: GameLevel[] = [
         value: 100,
       },
       {
-        position: { x: 650, y: 300 },
+        position: { x: 800, y: 300 },
+        velocity: { x: 0, y: 0 },
+        size: { width: 20, height: 20 },
+        isGrounded: false,
+        type: "coin",
+        value: 100,
+      },
+      {
+        position: { x: 1100, y: 250 },
+        velocity: { x: 0, y: 0 },
+        size: { width: 20, height: 20 },
+        isGrounded: false,
+        type: "coin",
+        value: 100,
+      },
+      {
+        position: { x: 1350, y: 350 },
+        velocity: { x: 0, y: 0 },
+        size: { width: 20, height: 20 },
+        isGrounded: false,
+        type: "coin",
+        value: 100,
+      },
+      {
+        position: { x: 1600, y: 300 },
+        velocity: { x: 0, y: 0 },
+        size: { width: 20, height: 20 },
+        isGrounded: false,
+        type: "coin",
+        value: 100,
+      },
+      {
+        position: { x: 2450, y: 350 },
+        velocity: { x: 0, y: 0 },
+        size: { width: 20, height: 20 },
+        isGrounded: false,
+        type: "coin",
+        value: 100,
+      },
+      {
+        position: { x: 2000, y: 450 },
         velocity: { x: 0, y: 0 },
         size: { width: 25, height: 25 },
         isGrounded: false,

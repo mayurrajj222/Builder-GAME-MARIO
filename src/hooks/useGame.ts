@@ -134,6 +134,17 @@ export function useGame() {
       // Check ground collision
       player.isGrounded = isOnGround(player, platforms);
 
+      // Check if player is on a moving platform and move with it
+      if (player.isGrounded) {
+        platforms.forEach((platform) => {
+          if (platform.type === "moving" && checkCollision(player, platform)) {
+            // Player moves with the platform
+            player.position.x += platform.velocity.x;
+            player.position.y += platform.velocity.y;
+          }
+        });
+      }
+
       // Update position
       updatePosition(player);
 
@@ -211,16 +222,66 @@ export function useGame() {
   const updateEnemies = useCallback(
     (enemies: Enemy[], platforms: Platform[]) => {
       return enemies.map((enemy) => {
-        // Simple AI - move in direction until hitting obstacle
+        // Check if enemy is about to fall off a platform
+        const futureX =
+          enemy.position.x +
+          (enemy.direction === "left" ? -enemy.speed - 5 : enemy.speed + 5);
+        const feetY = enemy.position.y + enemy.size.height;
+
+        // Check if there's still ground ahead
+        const groundAhead = platforms.some((platform) => {
+          return (
+            futureX >= platform.position.x &&
+            futureX <= platform.position.x + platform.size.width &&
+            feetY >= platform.position.y - 5 &&
+            feetY <= platform.position.y + 15
+          );
+        });
+
+        // Check if hitting a wall
+        const wallAhead = platforms.some((platform) => {
+          const enemyFutureRight = futureX + enemy.size.width;
+          const enemyFutureLeft = futureX;
+          const enemyTop = enemy.position.y;
+          const enemyBottom = enemy.position.y + enemy.size.height;
+
+          return (
+            ((enemyFutureRight > platform.position.x &&
+              enemyFutureLeft < platform.position.x + platform.size.width) ||
+              (enemyFutureLeft < platform.position.x + platform.size.width &&
+                enemyFutureRight > platform.position.x)) &&
+            enemyBottom > platform.position.y &&
+            enemyTop < platform.position.y + platform.size.height &&
+            platform.type !== "moving" // Don't consider moving platforms as walls
+          );
+        });
+
+        // Turn around if no ground ahead or hitting a wall
+        if (!groundAhead || wallAhead) {
+          enemy.direction = enemy.direction === "left" ? "right" : "left";
+        }
+
+        // Move enemy in current direction
         enemy.velocity.x =
           enemy.direction === "left" ? -enemy.speed : enemy.speed;
 
         // Apply physics
         applyGravity(enemy);
-        updatePosition(enemy);
 
-        // Check ground collision
+        // Check ground collision before moving
         enemy.isGrounded = isOnGround(enemy, platforms);
+
+        // If enemy is on a moving platform, move with it
+        if (enemy.isGrounded) {
+          platforms.forEach((platform) => {
+            if (platform.type === "moving" && checkCollision(enemy, platform)) {
+              enemy.position.x += platform.velocity.x;
+              enemy.position.y += platform.velocity.y;
+            }
+          });
+        }
+
+        updatePosition(enemy);
 
         // Handle platform collisions
         platforms.forEach((platform) => {
@@ -229,22 +290,10 @@ export function useGame() {
           }
         });
 
-        // Turn around at platform edges or walls
-        const futurePosition = {
-          x: enemy.position.x + (enemy.direction === "left" ? -10 : 10),
-          y: enemy.position.y + enemy.size.height,
-        };
-
-        const onPlatform = platforms.some(
-          (platform) =>
-            futurePosition.x >= platform.position.x &&
-            futurePosition.x <= platform.position.x + platform.size.width &&
-            futurePosition.y >= platform.position.y &&
-            futurePosition.y <= platform.position.y + 10,
-        );
-
-        if (!onPlatform) {
-          enemy.direction = enemy.direction === "left" ? "right" : "left";
+        // Keep enemies from falling off the world
+        if (enemy.position.y > GAME_CONFIG.CANVAS_HEIGHT + 50) {
+          // Remove enemies that fall off (they'll be filtered out)
+          enemy.health = 0;
         }
 
         return enemy;
@@ -338,8 +387,11 @@ export function useGame() {
       // Update player
       newState.player = updatePlayer({ ...prev.player }, newState.platforms);
 
-      // Update enemies
-      newState.enemies = updateEnemies([...prev.enemies], newState.platforms);
+      // Update enemies and filter out dead ones
+      newState.enemies = updateEnemies(
+        [...prev.enemies],
+        newState.platforms,
+      ).filter((enemy) => enemy.health > 0);
 
       // Check collectibles
       const collectibleResult = checkCollectibles(
@@ -382,17 +434,19 @@ export function useGame() {
       newState.camera = updateCamera(newState.player, { ...prev.camera });
 
       // Check level completion (reached far right of level)
-      // Level 1 ends at 1200, others progressively further
+      // Adjusted for longer levels
       const levelEndX =
         newState.level === 1
-          ? 1000
-          : newState.level <= 5
-            ? 1200
-            : newState.level <= 10
-              ? 1400
-              : newState.level <= 15
-                ? 1600
-                : 2000;
+          ? 3000
+          : newState.level === 2
+            ? 3100
+            : newState.level <= 5
+              ? 1500
+              : newState.level <= 10
+                ? 1700
+                : newState.level <= 15
+                  ? 2000
+                  : 2500;
 
       if (newState.player.position.x > levelEndX) {
         newState.gameStatus = "levelComplete";
