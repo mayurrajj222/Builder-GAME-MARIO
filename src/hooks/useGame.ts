@@ -382,14 +382,17 @@ export function useGame() {
       newState.camera = updateCamera(newState.player, { ...prev.camera });
 
       // Check level completion (reached far right of level)
+      // Level 1 ends at 1200, others progressively further
       const levelEndX =
-        newState.level <= 5
-          ? 1200
-          : newState.level <= 10
-            ? 1400
-            : newState.level <= 15
-              ? 1600
-              : 2000;
+        newState.level === 1
+          ? 1000
+          : newState.level <= 5
+            ? 1200
+            : newState.level <= 10
+              ? 1400
+              : newState.level <= 15
+                ? 1600
+                : 2000;
 
       if (newState.player.position.x > levelEndX) {
         newState.gameStatus = "levelComplete";

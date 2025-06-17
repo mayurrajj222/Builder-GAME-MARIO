@@ -60,6 +60,7 @@ export default function Game() {
           gameState={gameState}
           onRestart={resetGame}
           onBackToMenu={handleBackToMenu}
+          onNextLevel={nextLevel}
         />
       )}
     </div>
