@@ -461,19 +461,17 @@ export function useGame() {
       newState.camera = updateCamera(newState.player, { ...prev.camera });
 
       // Check level completion (reached far right of level)
-      // Adjusted for longer levels
+      // Consistent and achievable completion distances
       const levelEndX =
-        newState.level === 1
-          ? 3000
-          : newState.level === 2
-            ? 3100
-            : newState.level <= 5
-              ? 1500
-              : newState.level <= 10
-                ? 1700
-                : newState.level <= 15
-                  ? 2000
-                  : 2500;
+        newState.level <= 2
+          ? 2800 // Levels 1-2: 2800px
+          : newState.level <= 5
+            ? 2500 // Levels 3-5: 2500px
+            : newState.level <= 10
+              ? 2700 // Levels 6-10: 2700px
+              : newState.level <= 15
+                ? 2900
+                : 3000; // Levels 11-15: 2900-3000px
 
       if (newState.player.position.x > levelEndX) {
         newState.gameStatus = "levelComplete";
