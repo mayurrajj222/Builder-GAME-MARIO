@@ -203,8 +203,8 @@ export function MobileControls({
           </div>
         </div>
 
-        {/* Pause Button - Top center for easy access */}
-        <div className="absolute top-4 right-4 pointer-events-auto">
+        {/* Pause Button - Top left to avoid overlap */}
+        <div className="absolute top-4 left-1/2 transform -translate-x-1/2 pointer-events-auto">
           <button
             className={cn(
               "w-12 h-12 rounded-full bg-gray-600/90 border-2 border-gray-500",

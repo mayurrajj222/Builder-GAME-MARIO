@@ -15,12 +15,12 @@ interface GameCanvasProps {
 export function GameCanvas({ gameState }: GameCanvasProps) {
   const { player, enemies, collectibles, platforms, camera, level } = gameState;
 
-  // Landscape-optimized canvas dimensions
+  // Fullscreen canvas dimensions
   const canvasWidth = GAME_CONFIG.LANDSCAPE_MODE
-    ? Math.min(window.innerWidth - 80, GAME_CONFIG.LANDSCAPE_CANVAS_WIDTH)
+    ? window.innerWidth
     : GAME_CONFIG.CANVAS_WIDTH;
   const canvasHeight = GAME_CONFIG.LANDSCAPE_MODE
-    ? Math.min(window.innerHeight - 140, GAME_CONFIG.LANDSCAPE_CANVAS_HEIGHT)
+    ? window.innerHeight
     : Math.min(window.innerHeight - 120, GAME_CONFIG.CANVAS_HEIGHT);
 
   const getBackgroundStyle = () => {
@@ -37,19 +37,15 @@ export function GameCanvas({ gameState }: GameCanvasProps) {
   return (
     <div
       className={cn(
-        "relative overflow-hidden shadow-2xl",
+        "relative overflow-hidden",
         "select-none touch-none", // Prevent text selection and touch scrolling
-        "rounded-lg landscape:rounded-xl", // Optimized for landscape
-        "border-2 landscape:border-4 border-gray-800",
-        "landscape:w-full", // Take full width in landscape
+        "landscape:w-full landscape:h-full", // Take full screen in landscape
       )}
       style={{
         width: `${canvasWidth}px`,
         height: `${canvasHeight}px`,
         maxWidth: "100vw",
         maxHeight: "100vh",
-        minHeight: "300px",
-        minWidth: "400px",
         ...getBackgroundStyle(),
       }}
     >
@@ -137,26 +133,6 @@ export function GameCanvas({ gameState }: GameCanvasProps) {
 
       {/* Game UI */}
       <GameUI gameState={gameState} />
-
-      {/* Debug info (only in development) */}
-      {process.env.NODE_ENV === "development" && (
-        <div className="absolute bottom-4 right-4 bg-black/70 text-white text-xs p-2 rounded font-mono">
-          <div>
-            Player: ({Math.round(player.position.x)},{" "}
-            {Math.round(player.position.y)})
-          </div>
-          <div>
-            Camera: ({Math.round(camera.x)}, {Math.round(camera.y)})
-          </div>
-          <div>
-            Velocity: ({Math.round(player.velocity.x * 10) / 10},{" "}
-            {Math.round(player.velocity.y * 10) / 10})
-          </div>
-          <div>Grounded: {player.isGrounded ? "Yes" : "No"}</div>
-          <div>Enemies: {enemies.length}</div>
-          <div>Collectibles: {collectibles.length}</div>
-        </div>
-      )}
     </div>
   );
 }
