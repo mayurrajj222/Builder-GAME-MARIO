@@ -42,10 +42,8 @@ export function GameCanvas({ gameState }: GameCanvasProps) {
         "landscape:w-full landscape:h-full", // Take full screen in landscape
       )}
       style={{
-        width: `${canvasWidth}px`,
-        height: `${canvasHeight}px`,
-        maxWidth: "100vw",
-        maxHeight: "100vh",
+        width: "100vw",
+        height: "100vh",
         ...getBackgroundStyle(),
       }}
     >
@@ -133,6 +131,8 @@ export function GameCanvas({ gameState }: GameCanvasProps) {
 
       {/* Game UI */}
       <GameUI gameState={gameState} />
+
+      {/* Ensure no debug overlays appear */}
     </div>
   );
 }

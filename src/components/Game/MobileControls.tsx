@@ -163,43 +163,44 @@ export function MobileControls({
           </div>
         </div>
 
-        {/* Right Side Controls */}
-        <div className="absolute bottom-4 right-4 flex flex-col gap-3 pointer-events-auto">
-          <div className="flex gap-2">
-            <button
-              className={cn(
-                "w-14 h-14 rounded-full bg-yellow-500/90 border-3 border-yellow-400",
-                "flex items-center justify-center text-white text-lg font-bold",
-                "shadow-xl active:bg-yellow-600 active:scale-95 transition-all duration-100",
-                "touch-manipulation select-none",
-                controls.run && "bg-yellow-600 scale-95",
-              )}
-              onTouchStart={() => onRun(true)}
-              onTouchEnd={() => onRun(false)}
-              onMouseDown={() => onRun(true)}
-              onMouseUp={() => onRun(false)}
-              onMouseLeave={() => onRun(false)}
-            >
-              🏃
-            </button>
+        {/* Right Side Controls - Separated to prevent overlap */}
+        <div className="absolute bottom-4 right-16 flex flex-col gap-2 pointer-events-auto">
+          <button
+            className={cn(
+              "w-16 h-16 rounded-full bg-yellow-500/90 border-3 border-yellow-400",
+              "flex items-center justify-center text-white text-lg font-bold",
+              "shadow-xl active:bg-yellow-600 active:scale-95 transition-all duration-100",
+              "touch-manipulation select-none",
+              controls.run && "bg-yellow-600 scale-95",
+            )}
+            onTouchStart={() => onRun(true)}
+            onTouchEnd={() => onRun(false)}
+            onMouseDown={() => onRun(true)}
+            onMouseUp={() => onRun(false)}
+            onMouseLeave={() => onRun(false)}
+          >
+            🏃
+          </button>
+          <div className="text-white/60 text-xs text-center font-bold">RUN</div>
+        </div>
 
-            <button
-              className={cn(
-                "w-20 h-20 rounded-full bg-green-500/90 border-4 border-green-400",
-                "flex items-center justify-center text-white text-3xl font-bold",
-                "shadow-2xl active:bg-green-600 active:scale-95 transition-all duration-100",
-                "touch-manipulation select-none animate-pulse",
-                controls.jump && "bg-green-600 scale-95",
-              )}
-              onTouchStart={onJump}
-              onMouseDown={onJump}
-            >
-              🦘
-            </button>
-          </div>
-
-          <div className="text-white/60 text-xs text-center font-bold">
-            RUN • JUMP
+        {/* Jump Button - Separate positioning */}
+        <div className="absolute bottom-4 right-4 pointer-events-auto">
+          <button
+            className={cn(
+              "w-20 h-20 rounded-full bg-green-500/90 border-4 border-green-400",
+              "flex items-center justify-center text-white text-3xl font-bold",
+              "shadow-2xl active:bg-green-600 active:scale-95 transition-all duration-100",
+              "touch-manipulation select-none animate-pulse",
+              controls.jump && "bg-green-600 scale-95",
+            )}
+            onTouchStart={onJump}
+            onMouseDown={onJump}
+          >
+            🦘
+          </button>
+          <div className="text-white/60 text-xs text-center font-bold mt-1">
+            JUMP
           </div>
         </div>
 
