@@ -22,7 +22,7 @@ export interface GameEntity {
 }
 
 export interface Player extends GameEntity {
-  character: "dudu" | "bubu";
+  character: "bubu" | "dudu";
   health: number;
   powerUp: PowerUpType | null;
   direction: "left" | "right";

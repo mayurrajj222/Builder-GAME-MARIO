@@ -29,20 +29,18 @@ export function Character({ player, camera }: CharacterProps) {
       {/* Character Sprite */}
       <Image
         source={{
-          uri: "https://cdn.builder.io/api/v1/assets/eec2c1b00e834cd39ddbda5535f96e32/player-d7e8a5?format=webp&width=800",
+          uri:
+            player.character === "bubu"
+              ? "https://cdn.builder.io/api/v1/assets/eec2c1b00e834cd39ddbda5535f96e32/bubu-92974d"
+              : "https://cdn.builder.io/api/v1/assets/eec2c1b00e834cd39ddbda5535f96e32/bubu-dudu-bubu-0ca994",
         }}
-        style={[
-          styles.sprite,
-          {
-            tintColor: config.color,
-          },
-        ]}
+        style={styles.sprite}
         resizeMode="contain"
       />
 
       {/* Character Indicator */}
       <Text style={styles.indicator}>
-        {player.character === "dudu" ? "🔥" : "💙"}
+        {player.character === "bubu" ? "🐼" : "🐻"}
       </Text>
 
       {/* Health Bar */}

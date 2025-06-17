@@ -21,8 +21,8 @@ import { LEVELS } from "@/data/levels";
 
 export function useGame() {
   const gameLoopRef = useRef<number>();
-  const [selectedCharacter, setSelectedCharacter] = useState<"dudu" | "bubu">(
-    "dudu",
+  const [selectedCharacter, setSelectedCharacter] = useState<"bubu" | "dudu">(
+    "bubu",
   );
   const [gameState, setGameState] = useState<GameState>(() =>
     createInitialGameState(),
@@ -85,7 +85,7 @@ export function useGame() {
     setGameState(createInitialGameState());
   }, [selectedCharacter]);
 
-  const selectCharacter = useCallback((character: "dudu" | "bubu") => {
+  const selectCharacter = useCallback((character: "bubu" | "dudu") => {
     setSelectedCharacter(character);
     const level = LEVELS[0];
     const playerConfig = PLAYER_CONFIG[character];

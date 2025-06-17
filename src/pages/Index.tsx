@@ -20,15 +20,15 @@ const Index = () => {
             Super Dudu & Bubu
           </h1>
           <p className="text-2xl text-white/80 drop-shadow-lg font-game">
-            🔥 Epic Platform Adventure Game 💙
+            🐼 Epic Platform Adventure Game 🐻
           </p>
           <div className="flex items-center justify-center gap-4 text-4xl animate-float">
-            <div className="w-16 h-16 bg-game-dudu rounded-full flex items-center justify-center border-4 border-white/20 shadow-xl">
-              🔥
+            <div className="w-16 h-16 bg-game-bubu rounded-full flex items-center justify-center border-4 border-white/20 shadow-xl">
+              🐼
             </div>
             <span className="text-white/60">VS</span>
-            <div className="w-16 h-16 bg-game-bubu rounded-full flex items-center justify-center border-4 border-white/20 shadow-xl">
-              💙
+            <div className="w-16 h-16 bg-game-dudu rounded-full flex items-center justify-center border-4 border-white/20 shadow-xl">
+              🐻
             </div>
           </div>
         </div>
@@ -57,8 +57,8 @@ const Index = () => {
             </CardHeader>
             <CardContent>
               <CardDescription className="text-white/80">
-                Choose between Dudu (Fire) and Bubu (Ice) - each with unique
-                abilities and playstyles!
+                Choose between Bubu (Panda Magic) and Dudu (Bear Power) - each
+                with unique abilities and playstyles!
               </CardDescription>
             </CardContent>
           </Card>

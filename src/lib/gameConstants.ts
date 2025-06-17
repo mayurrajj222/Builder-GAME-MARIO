@@ -12,23 +12,23 @@ export const GAME_CONFIG = {
 } as const;
 
 export const PLAYER_CONFIG = {
-  dudu: {
-    color: "#ff6b4a",
-    darkColor: "#e55a3a",
-    name: "Dudu",
-    maxHealth: 3,
-    jumpForce: -15,
-    speed: 5,
-    runSpeed: 8,
-  },
   bubu: {
-    color: "#4a9eff",
-    darkColor: "#3a8eef",
+    color: "#ff69b4",
+    darkColor: "#e55a94",
     name: "Bubu",
     maxHealth: 3,
     jumpForce: -16,
     speed: 4.5,
     runSpeed: 7.5,
+  },
+  dudu: {
+    color: "#deb887",
+    darkColor: "#cd853f",
+    name: "Dudu",
+    maxHealth: 3,
+    jumpForce: -15,
+    speed: 5,
+    runSpeed: 8,
   },
 } as const;
 

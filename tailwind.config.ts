@@ -64,10 +64,10 @@ export default {
         },
         // Game-specific colors
         game: {
-          dudu: "#ff6b4a",
-          "dudu-dark": "#e55a3a",
-          bubu: "#4a9eff",
-          "bubu-dark": "#3a8eef",
+          bubu: "#ff69b4",
+          "bubu-dark": "#e55a94",
+          dudu: "#deb887",
+          "dudu-dark": "#cd853f",
           ground: "#8B5A2B",
           "ground-dark": "#7B4A1B",
           sky: "#87CEEB",

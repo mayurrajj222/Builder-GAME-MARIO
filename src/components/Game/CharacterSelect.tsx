@@ -11,8 +11,8 @@ import { PLAYER_CONFIG } from "@/lib/gameConstants";
 import { cn } from "@/lib/utils";
 
 interface CharacterSelectProps {
-  selectedCharacter: "dudu" | "bubu";
-  onSelectCharacter: (character: "dudu" | "bubu") => void;
+  selectedCharacter: "bubu" | "dudu";
+  onSelectCharacter: (character: "bubu" | "dudu") => void;
   onStartGame: () => void;
 }
 
@@ -21,7 +21,7 @@ export function CharacterSelect({
   onSelectCharacter,
   onStartGame,
 }: CharacterSelectProps) {
-  const characters: Array<"dudu" | "bubu"> = ["dudu", "bubu"];
+  const characters: Array<"bubu" | "dudu"> = ["bubu", "dudu"];
 
   return (
     <div className="min-h-screen bg-game-gradient flex items-center justify-center p-4">
@@ -72,7 +72,7 @@ export function CharacterSelect({
                       borderColor: config.darkColor,
                     }}
                   >
-                    {character === "dudu" ? "🔥" : "💙"}
+                    {character === "bubu" ? "🐼" : "🐻"}
                   </div>
 
                   <CardTitle className="text-3xl font-game text-white drop-shadow-lg">
@@ -80,9 +80,9 @@ export function CharacterSelect({
                   </CardTitle>
 
                   <CardDescription className="text-white/70 text-lg">
-                    {character === "dudu"
-                      ? "The fiery speedster with explosive power!"
-                      : "The cool strategist with precision control!"}
+                    {character === "bubu"
+                      ? "The cute panda with magical abilities!"
+                      : "The brave bear with powerful strength!"}
                   </CardDescription>
                 </CardHeader>
 
@@ -97,7 +97,7 @@ export function CharacterSelect({
                             key={i}
                             className={cn(
                               "w-3 h-3 rounded-full",
-                              i < (character === "dudu" ? 5 : 4)
+                              i < (character === "bubu" ? 4 : 5)
                                 ? "bg-green-400"
                                 : "bg-gray-400",
                             )}
@@ -144,17 +144,17 @@ export function CharacterSelect({
                       Special Abilities:
                     </h4>
                     <ul className="text-white/80 text-sm space-y-1">
-                      {character === "dudu" ? (
+                      {character === "bubu" ? (
                         <>
-                          <li>• Fire Dash - Extra speed boost</li>
-                          <li>• Heat Resistance - Lava immunity</li>
-                          <li>• Explosive Power-ups</li>
+                          <li>• Panda Magic - Higher jumps</li>
+                          <li>• Cute Charm - Stun enemies</li>
+                          <li>• Bamboo Power - Better precision</li>
                         </>
                       ) : (
                         <>
-                          <li>• Ice Jump - Higher jumps</li>
-                          <li>• Freeze Touch - Stun enemies</li>
-                          <li>• Cool Control - Better precision</li>
+                          <li>• Bear Strength - Extra speed boost</li>
+                          <li>• Honey Rush - Lava immunity</li>
+                          <li>• Roar Power - Explosive power-ups</li>
                         </>
                       )}
                     </ul>

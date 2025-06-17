@@ -35,15 +35,14 @@ export function Character({ player, camera }: CharacterProps) {
         transform: `scaleX(${player.direction === "left" ? -1 : 1}) ${
           player.powerUp === "mushroom" ? "scale(1.2)" : ""
         }`,
-        backgroundImage: `url(https://cdn.builder.io/api/v1/assets/eec2c1b00e834cd39ddbda5535f96e32/player-d7e8a5?format=webp&width=800)`,
+        backgroundImage:
+          player.character === "bubu"
+            ? `url(https://cdn.builder.io/api/v1/assets/eec2c1b00e834cd39ddbda5535f96e32/bubu-92974d)`
+            : `url(https://cdn.builder.io/api/v1/assets/eec2c1b00e834cd39ddbda5535f96e32/bubu-dudu-bubu-0ca994)`,
         backgroundSize: "contain",
         backgroundRepeat: "no-repeat",
         backgroundPosition: "center",
-        mixBlendMode: "multiply",
-        filter:
-          player.character === "dudu"
-            ? "hue-rotate(0deg) saturate(1.2)"
-            : "hue-rotate(200deg) saturate(1.2)",
+        mixBlendMode: "normal",
       }}
     >
       {/* Character indicator overlay */}
@@ -53,7 +52,7 @@ export function Character({ player, camera }: CharacterProps) {
           "mix-blend-mode-overlay opacity-[0.11]",
         )}
       >
-        {player.character === "dudu" ? "🔥" : "💙"}
+        {player.character === "bubu" ? "🐼" : "🐻"}
       </div>
 
       {/* Power-up effects */}
