@@ -9,41 +9,17 @@ import { MobileControls } from "@/components/Game/MobileControls";
 export default function Game() {
   const {
     gameState,
+    controls,
     selectedCharacter,
     startGame,
     pauseGame,
     resetGame,
     selectCharacter,
+    handleMove,
+    handleJump,
+    handleRun,
     nextLevel,
   } = useGame();
-
-  const [controls, setControls] = useState({
-    left: false,
-    right: false,
-    jump: false,
-    run: false,
-  });
-
-  // Handle mobile controls
-  const handleMove = (direction: "left" | "right" | "stop") => {
-    setControls((prev) => ({
-      ...prev,
-      left: direction === "left",
-      right: direction === "right",
-    }));
-  };
-
-  const handleJump = () => {
-    setControls((prev) => ({ ...prev, jump: true }));
-    // Reset jump after a short delay
-    setTimeout(() => {
-      setControls((prev) => ({ ...prev, jump: false }));
-    }, 100);
-  };
-
-  const handleRun = (isRunning: boolean) => {
-    setControls((prev) => ({ ...prev, run: isRunning }));
-  };
 
   const handlePause = () => {
     if (gameState.gameStatus === "playing") {
@@ -63,16 +39,6 @@ export default function Game() {
 
   // Lock screen orientation to landscape on mobile and optimize for horizontal play
   useEffect(() => {
-    const lockOrientation = () => {
-      if (screen.orientation && screen.orientation.lock) {
-        screen.orientation.lock("landscape-primary").catch(() => {
-          // Fallback for browsers that don't support orientation lock
-        });
-      }
-    };
-
-    lockOrientation();
-
     // Prevent zoom on mobile and optimize for touch
     const handleTouchStart = (e: TouchEvent) => {
       if (e.touches.length > 1) {
@@ -85,15 +51,6 @@ export default function Game() {
       e.preventDefault();
     };
 
-    // Add full screen support for better landscape experience
-    const handleFullscreen = () => {
-      if (document.documentElement.requestFullscreen) {
-        document.documentElement.requestFullscreen().catch(() => {
-          // Fullscreen not supported or user denied
-        });
-      }
-    };
-
     document.addEventListener("touchstart", handleTouchStart, {
       passive: false,
     });
@@ -101,13 +58,9 @@ export default function Game() {
       passive: false,
     });
 
-    // Auto-request fullscreen on first interaction (mobile optimization)
-    document.addEventListener("touchstart", handleFullscreen, { once: true });
-
     return () => {
       document.removeEventListener("touchstart", handleTouchStart);
       document.removeEventListener("contextmenu", handleContextMenu);
-      document.removeEventListener("touchstart", handleFullscreen);
     };
   }, []);
 

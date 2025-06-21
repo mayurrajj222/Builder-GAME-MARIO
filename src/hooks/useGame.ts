@@ -34,6 +34,26 @@ export function useGame() {
     run: false,
   });
 
+  const handleMove = useCallback((direction: "left" | "right" | "stop") => {
+    if (direction === "left") {
+      setControls((c) => ({ ...c, left: true, right: false }));
+    } else if (direction === "right") {
+      setControls((c) => ({ ...c, left: false, right: true }));
+    } else {
+      setControls((c) => ({ ...c, left: false, right: false }));
+    }
+  }, []);
+
+  const handleJump = useCallback(() => {
+    setControls((c) => ({ ...c, jump: true }));
+    // Reset jump state shortly after to allow for re-jumps
+    setTimeout(() => setControls((c) => ({ ...c, jump: false })), 150);
+  }, []);
+
+  const handleRun = useCallback((isRunning: boolean) => {
+    setControls((c) => ({ ...c, run: isRunning }));
+  }, []);
+
   function createInitialGameState(): GameState {
     const level = LEVELS[0];
     const playerConfig = PLAYER_CONFIG[selectedCharacter];
@@ -672,11 +692,15 @@ export function useGame() {
 
   return {
     gameState,
-    selectedCharacter,
+    controls,
     startGame,
     pauseGame,
     resetGame,
     selectCharacter,
+    selectedCharacter,
+    handleMove,
+    handleJump,
+    handleRun,
     nextLevel,
   };
 }
