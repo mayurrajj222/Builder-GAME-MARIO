@@ -1,0 +1,50 @@
+{
+  "name": "Super Dudu & Bubu - Epic Platform Adventure",
+  "short_name": "Dudu & Bubu",
+  "description": "A classic Super Mario-style platformer game with Dudu and Bubu characters",
+  "start_url": "/",
+  "display": "fullscreen",
+  "orientation": "landscape-primary",
+  "theme_color": "#1e40af",
+  "background_color": "#1e3a8a",
+  "scope": "/",
+  "icons": [
+    {
+      "src": "https://cdn.builder.io/api/v1/assets/eec2c1b00e834cd39ddbda5535f96e32/player-d7e8a5?format=webp&width=192",
+      "sizes": "192x192",
+      "type": "image/webp",
+      "purpose": "maskable any"
+    },
+    {
+      "src": "https://cdn.builder.io/api/v1/assets/eec2c1b00e834cd39ddbda5535f96e32/player-d7e8a5?format=webp&width=512",
+      "sizes": "512x512",
+      "type": "image/webp",
+      "purpose": "maskable any"
+    }
+  ],
+  "categories": ["games", "entertainment"],
+  "lang": "en",
+  "shortcuts": [
+    {
+      "name": "Play Game",
+      "short_name": "Play",
+      "description": "Start playing Super Dudu & Bubu",
+      "url": "/game",
+      "icons": [
+        {
+          "src": "https://cdn.builder.io/api/v1/assets/eec2c1b00e834cd39ddbda5535f96e32/player-d7e8a5?format=webp&width=96",
+          "sizes": "96x96",
+          "type": "image/webp"
+        }
+      ]
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "https://cdn.builder.io/api/v1/assets/eec2c1b00e834cd39ddbda5535f96e32/bg-ce4320?format=webp&width=800",
+      "sizes": "800x600",
+      "type": "image/webp",
+      "form_factor": "wide"
+    }
+  ]
+}
